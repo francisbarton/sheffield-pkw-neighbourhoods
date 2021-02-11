@@ -34,6 +34,10 @@ library(htmlwidgets)
 
 ## Making sense of overlapping local health geographies
 
+author: Fran Barton <fbarton@alwaysdata.net>
+date: 2021-02-11
+
+
 <!-- badges: start -->
 <!-- badges: end -->
 
