@@ -9,6 +9,8 @@ jobs:
   render:
     name: Render Rmarkdown files
     runs-on: macOS-latest
+    with:
+      build: false
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -26,7 +28,7 @@ jobs:
       - name: Render Rmarkdown files
         run: |
           RMD_PATH=($(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '[.]Rmd$'))
-          Rscript -e 'for (f in commandArgs(TRUE)) if (file.exists(f)) rmarkdown::render(f)' ${RMD_PATH[*]} 
+          Rscript -e 'for (f in commandArgs(TRUE)) if (file.exists(f)) rmarkdown::render(f)' ${RMD_PATH[*]}
       - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
