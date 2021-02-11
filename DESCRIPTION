@@ -1,7 +1,7 @@
 Package: sheffield-pkw-neighbourhoods
 Version: 0.0.0.9000
 Title: Neighbourhood Mapping For Heeley Trust
-Description: Making sense of overlapping local health geographies
+Description: Making better sense of local health geographies
 Authors@R: person("Fran", "Barton", email = "fbarton@alwaysdata.net", role = c("aut", "cre")
 License: MIT + file LICENSE
 Encoding: UTF-8
