@@ -9,8 +9,8 @@ jobs:
   render:
     name: Render Rmarkdown files
     runs-on: macOS-latest
-    with:
-      build: false
+    # with:
+    #   build: false
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
