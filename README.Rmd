@@ -2,6 +2,8 @@
 title: Neighbourhood Mapping For Heeley Trust
 author: Fran Barton <fbarton@alwaysdata.net>
 output: github_document
+editor_options: 
+  chunk_output_type: inline
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -10,8 +12,8 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "images/",
-  out.width = "100%"
+  fig.path = "images/"
+  # out.width = "100%"
 )
 
 
@@ -28,11 +30,13 @@ library(leaflet)
 library(leaflet.extras)
 library(htmlwidgets)
 
+source(here("R", "data-prep.R"))
+
 ```
 
 ## `r readLines(here::here("DESCRIPTION")) %>% stringr::str_subset("^Description") %>% str_extract("(?<=: ).*")`
 
-author: Fran Barton <fbarton@alwaysdata.net>
+<!-- author: Fran Barton <fbarton@alwaysdata.net> -->
 
 Start date: 2021-02-11
 
@@ -52,12 +56,41 @@ Start date: 2021-02-11
 * [Electoral wards](https://www.sheffield.gov.uk/home/your-city-council/electoral-wards) (*n* = 28)
 * Census MSOAs (*n* = 70)
 * Census LSOAs (*n* = 345)
-* Census OAs (*n* = 1817 (check this))
+* Census OAs (*n* = 1,817)
 
 
 ### Heeley area
 
 Local PKW: Sheaf Consortium (PKW11)
+
+* Comprises 76 OAs
+* 17 LSOAs (5 of which are not entirely contained within the Sheaf PKW area)
+* Overlaps parts of 5 electoral wards
+
+
+
+
+```{r map-1}
+
+tmap_mode("plot")
+
+
+map1 <- tm_shape(sheffield_city_boundary) +
+  tm_borders("orange", 4) +
+  tm_shape(sheaf_boundary) +
+  tm_borders("cornflowerblue", 2)
+
+map1
+
+tmap_leaflet(map1, mode = "view")
+
+
+```
+
+
+
+
+
 
 * [Heeley Primary Care Network](https://openprescribing.net/pcn/U12376/) - 9 practices
 
@@ -72,7 +105,7 @@ Summary of documents, with hyperlinks to sources, to be included here...
 
 * [Shaping Sheffield pdf](https://www.sheffieldacp.org.uk/content/uploads/2020/02/Shaping-Sheffield-Main-Doc-Final.pdf)
 
-* [Sheffield Deprivation analysis 2011 -  pdf](https://www.sheffield.ac.uk/polopoly_fs/1.165648!/file/ajr_sheffield_deprivation_nov_2011.pdf) - by Alasdair Rae
+* [Sheffield Deprivation analysis 2011 --  pdf](https://www.sheffield.ac.uk/polopoly_fs/1.165648!/file/ajr_sheffield_deprivation_nov_2011.pdf) by Alasdair Rae
 
 #### Other links
 
@@ -85,4 +118,6 @@ Thanks to Dale Burton at Sheffield City Council for his kind and prompt assistan
 
 [Heeley Trust](https://www.heeleytrust.org/)
 
-![Sheffield Data for Good logo](images/sheff-d4g-logo.png) A [Sheffield Data for Good](https://www.meetup.com/Sheffield-Data-for-Good/) project.
+![Sheffield Data for Good logo](images/sheff-d4g-logo.png)
+
+A [Sheffield Data for Good](https://www.meetup.com/Sheffield-Data-for-Good/) project.
