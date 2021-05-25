@@ -100,11 +100,11 @@ oas_inside_sheaf <- sheaf_pkw_oas %>%
 
 # Create a table to show this
 inside_outside_table <- oas_inside_sheaf %>%
-  dplyr::count(lsoa11nm, name = "OAs inside area") %>%
-  dplyr::arrange(desc(`OAs inside area`)) %>%
+  dplyr::count(lsoa11nm, name = "OAs inside Sheaf area") %>%
+  dplyr::arrange(desc(`OAs inside Sheaf area`)) %>%
   dplyr::left_join(
     oas_outside_sheaf %>%
-      dplyr::count(lsoa11nm, name = "OAs outside area")
+      dplyr::count(lsoa11nm, name = "OAs outside Sheaf area")
   )
 
 
@@ -128,21 +128,26 @@ sheffield_city_boundary <- sheffield_wards %>%
 
 # Obtain an OA:Ward lookup table ------------------------------------------
 
+if (FALSE) {
+  oa_wards_lookup <- jogger::geo_get(
+    bounds_level = "oa",
+    within = "Sheffield",
+    within_level = "lad",
+    include_msoa = FALSE,
+    # returns ward data in "tidy" mode
+    return_boundaries = FALSE
+  )
 
-oa_wards_lookup <- jogger::geo_get(
-  bounds_level = "oa",
-  within = sheffield_wards$wd20cd,
-  within_level = "wd",
-  within_cd = TRUE,
-  return_boundaries = FALSE
-)
+  saveRDS(oa_wards_lookup,
+          here::here("rds_data", "oa_wards_lookup.Rds"))
+}
+
+oa_wards_lookup <- readRDS(here::here("rds_data", "oa_wards_lookup.Rds"))
 
 # Find all wards that contain 1 or more OAs within the Sheaf area
 sheaf_wards <- oa_wards_lookup %>%
-  dplyr::inner_join(sheaf_pkw_oas) %>%
+  dplyr::inner_join(sheaf_pkw_oas, by = "oa11cd") %>%
   dplyr::select(wd20cd) %>%
   dplyr::distinct() %>%
   dplyr::inner_join(sheffield_wards, .)
-
-
 
